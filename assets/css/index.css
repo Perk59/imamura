@@ -1,0 +1,722 @@
+/* トップページ専用スタイル */
+
+/* スライドショー */
+.slideshow-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+/* キャッチコピー */
+.catchcopy-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 2;
+    width: 90%;
+    max-width: 800px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.catchcopy-main {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1.5s ease forwards;
+}
+
+.catchcopy-sub {
+    font-size: 1.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1.5s ease forwards 0.5s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 開催日時セクション */
+.date-section {
+    background: linear-gradient(45deg, #B54B1E, #D96941);
+    color: white;
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.date-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+.date-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem 4rem;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    transform: translateY(20px);
+    opacity: 0;
+    animation: dateBoxFadeIn 0.8s ease forwards 0.3s;
+}
+
+.date-content {
+    text-align: center;
+}
+
+.year {
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+
+.month-day {
+    display: block;
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.time {
+    display: block;
+    font-size: 1.8rem;
+}
+
+@keyframes dateBoxFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* スケジュールハイライト */
+.schedule-highlight {
+    background-color: #f8f8f8;
+    padding: 4rem 0;
+}
+
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.schedule-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+}
+
+/* 光沢エフェクト */
+.glow-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: 12px;
+}
+
+.schedule-card:hover .glow-effect {
+    opacity: 1;
+}
+
+/* タッチデバイス対応 */
+.touch-device .schedule-card:hover {
+    transform: none;
+}
+
+.touch-active {
+    transform: scale(0.98) !important;
+    transition: transform 0.1s ease !important;
+}
+
+/* キーボードフォーカス */
+.keyboard-focus {
+    outline: 3px solid #D96941 !important;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(217, 105, 65, 0.3) !important;
+}
+
+/* 動きを抑制する設定 */
+@media (prefers-reduced-motion: reduce) {
+    .schedule-card,
+    .experience-card,
+    .glow-effect,
+    .modal-content {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .schedule-card:hover {
+        transform: none !important;
+    }
+}
+
+/* 高コントラスト対応 */
+@media (prefers-contrast: high) {
+    .schedule-card {
+        border: 2px solid #333;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+    
+    .schedule-time {
+        background: #333;
+        color: white;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+    }
+}
+
+.schedule-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.schedule-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.schedule-actions {
+    margin-top: 1rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.schedule-card:hover .schedule-actions,
+.schedule-card:focus .schedule-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.schedule-detail-btn {
+    background: linear-gradient(45deg, #D96941, #B54B1E);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(217, 105, 65, 0.3);
+}
+
+.schedule-detail-btn:hover,
+.schedule-detail-btn:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(217, 105, 65, 0.4);
+    outline: none;
+}
+
+/* モーダルの修正 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    animation: modalBackgroundFade 0.3s ease;
+}
+
+.modal-content {
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 10001;
+}
+
+.event-detail-modal {
+    animation: modalSlideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalSlideUp {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    border-bottom: 1px solid #eee;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px 15px 0 0;
+}
+
+.modal-title {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close:hover {
+    color: #333;
+    background: rgba(0, 0, 0, 0.1);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 0;
+}
+
+/* イベント詳細コンテンツ */
+.event-detail-content {
+    padding: 2rem;
+}
+
+.event-detail-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #eee;
+}
+
+.event-detail-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.event-detail-time {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.time-badge-large {
+    background: linear-gradient(45deg, #D96941, #B54B1E);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 1rem;
+    box-shadow: 0 5px 20px rgba(217, 105, 65, 0.3);
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% { box-shadow: 0 5px 20px rgba(217, 105, 65, 0.3); }
+    50% { box-shadow: 0 8px 30px rgba(217, 105, 65, 0.5); }
+}
+
+.event-detail-location {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.event-detail-description {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 12px;
+    border-left: 5px solid #D96941;
+    line-height: 1.8;
+    color: #333;
+    font-size: 1.1rem;
+    white-space: pre-wrap;
+}
+
+.schedule-time {
+    font-size: 1.2rem;
+    color: #D96941;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.schedule-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.schedule-location {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.schedule-description {
+    color: #555;
+    line-height: 1.6;
+}
+
+.schedule-link-container {
+    text-align: center;
+}
+
+.schedule-link-btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: linear-gradient(45deg, #D96941, #B54B1E);
+    color: white;
+    border-radius: 50px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(217, 105, 65, 0.3);
+}
+
+.schedule-link-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(217, 105, 65, 0.4);
+    color: white;
+}
+
+/* 体験コンテンツセクション */
+.experience-section {
+    background-color: white;
+    padding: 4rem 0;
+}
+
+.experience-grid {
+    display: grid;
+    gap: 4rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.experience-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.experience-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.experience-card:nth-child(even) {
+    grid-template-columns: 1fr 1fr;
+}
+
+.experience-card:nth-child(even) .experience-image {
+    order: 2;
+}
+
+.experience-card:nth-child(even) .experience-content {
+    order: 1;
+}
+
+.experience-image {
+    height: 100%;
+    min-height: 300px;
+    overflow: hidden;
+}
+
+.experience-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.experience-card:hover .experience-image img {
+    transform: scale(1.05);
+}
+
+.experience-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.experience-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #D96941;
+}
+
+.experience-target {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1rem;
+    padding: 0.3rem 1rem;
+    background: #f8f8f8;
+    border-radius: 20px;
+    display: inline-block;
+    width: fit-content;
+}
+
+.experience-description {
+    line-height: 1.8;
+    color: #333;
+}
+
+/* 参加セクション */
+.join-section {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                linear-gradient(45deg, #D96941, #B54B1E);
+    color: white;
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.join-description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.join-description.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.participation-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.step-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.step-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    background: white;
+    color: #D96941;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.step-content h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.step-content p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.join-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.join-buttons.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease, transform 0.8s ease 0.2s;
+}
+
+.join-button {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: inline-block;
+}
+
+.join-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.join-button.primary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+}
+
+.join-button.primary:hover {
+    background: white;
+    color: #D96941;
+}
+
+.join-button.secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.join-button.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+    color: white;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .catchcopy-main {
+        font-size: 2.5rem;
+    }
+
+    .catchcopy-sub {
+        font-size: 1.2rem;
+    }
+
+    .date-box {
+        padding: 1.5rem 2rem;
+    }
+
+    .month-day {
+        font-size: 2.5rem;
+    }
+
+    .time {
+        font-size: 1.5rem;
+    }
+
+    .experience-card {
+        grid-template-columns: 1fr;
+    }
+
+    .experience-card:nth-child(even) {
+        grid-template-columns: 1fr;
+    }
+
+    .experience-card:nth-child(even) .experience-image {
+        order: 1;
+    }
+
+    .experience-card:nth-child(even) .experience-content {
+        order: 2;
+    }
+
+    .experience-image {
+        min-height: 200px;
+    }
+
+    .experience-content {
+        padding: 1.5rem;
+    }
+
+    .join-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .join-button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
