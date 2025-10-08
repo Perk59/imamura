@@ -173,16 +173,16 @@ foreach ($schedules as $schedule) {
 
     <!-- イベント詳細モーダル -->
     <div id="eventDetailModal" class="modal">
-        <div class="modal-content event-detail-modal">
-            <div class="modal-header">
-                <h2 class="modal-title">イベント詳細</h2>
-                <button class="modal-close" onclick="closeEventModal()">&times;</button>
-            </div>
-            <div class="modal-body" id="eventModalBody">
-                <!-- JavaScript で内容を設定 -->
-            </div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">イベント詳細</h2>
+            <button class="modal-close" onclick="closeEventModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="eventModalBody">
+            <!-- ここにJavaScriptで内容が設定されます -->
         </div>
     </div>
+</div>
 
     <?php include 'includes/footer.php'; ?>
 
