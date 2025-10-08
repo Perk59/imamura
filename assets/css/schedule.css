@@ -29,12 +29,48 @@
     padding: 0 !important;
 }
 
-#eventDetailModal .modal-header {
+#eventDetailModal {
     position: sticky !important;
     top: 0 !important;
     background: white !important;
     z-index: 10 !important;
     border-radius: 15px 15px 0 0 !important;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 24px;
+    line-height: 1;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    background: #f3f4f6;
+    color: #333;
+    transform: rotate(90deg);
 }
 
 .schedule-day {
