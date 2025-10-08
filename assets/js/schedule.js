@@ -54,7 +54,6 @@ function showEventDetail(event) {
     
     if (!modalBody || !modal) {
         console.error('モーダル要素が見つかりません');
-        return;
     }
     
     modalBody.innerHTML = content;
