@@ -1,20 +1,24 @@
 // イベント詳細表示機能（QRコード対応版）
 function showEventDetail(event) {
-    const startTime = new Date(event.start_time);
-    const endTime = event.end_time ? new Date(event.end_time) : null;
-    
-    let qrSection = '';
-    if (event.qr_image) {
-        qrSection = `
-            <div class="event-detail-qr">
-                <h4>このイベントに参加する</h4>
-                <div class="qr-section">
-                    <img src="${event.qr_image}" alt="参加申込QRコード" class="qr-code-modal">
-                    <p class="qr-instruction">QRコードを読み取って参加申込み</p>
-                </div>
-            </div>
-        `;
+    const modal = document.getElementById('eventDetailModal');
+    if (!modal) {
+        console.error('モーダル要素が見つかりません');
+        return;
     }
+    
+    // モーダルを表示
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // スクロール防止
+    
+    // モーダルの内容を設定
+    const content = `
+        <div class="event-detail-content">
+            // ... モーダルの内容 ...
+        </div>
+    `;
+    
+    document.getElementById('eventModalBody').innerHTML = content;
+}
     
     const content = `
         <div class="event-detail-content">
@@ -77,7 +81,7 @@ function closeEventModal() {
     const modal = document.getElementById('eventDetailModal');
     if (modal) {
         modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        document.body.style.overflow = 'auto'; // スクロールを再有効化
     }
 }
 
