@@ -78,7 +78,7 @@ window.showEventDetail = function(event) {
                 <h4 style="text-align: center; color: #D96941; margin-bottom: 1.5rem; font-size: 1.3rem;">このイベントに参加する</h4>
                 <div class="qr-section" style="text-align: center;">
                     <div style="background: white; padding: 1.5rem; border-radius: 10px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                        <img src="assets/images/qr/${event.qr_image}" alt="参加申込QRコード" style="width: 200px; height: 200px; display: block; margin: 0 auto;">
+                        <img src="/Ima/${event.qr_image}" alt="参加申込QRコード" style="width: 200px; height: 200px; display: block; margin: 0 auto;">
                     </div>
                     <p style="margin-top: 1rem; color: #666; font-size: 0.95rem;">スマートフォンでQRコードを読み取って参加申込み</p>
                 </div>
