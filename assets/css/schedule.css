@@ -1,5 +1,5 @@
-/* モーダル修正（最優先） */
-#eventDetailModal {
+/* モーダル全画面背景 */
+.modal, #eventDetailModal {
     display: none;
     position: fixed !important;
     z-index: 9999 !important;
@@ -12,7 +12,8 @@
     backdrop-filter: blur(5px) !important;
 }
 
-#eventDetailModal .modal-content {
+/* モーダルウィンドウ */
+.modal-content {
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
@@ -29,36 +30,16 @@
     padding: 0 !important;
 }
 
-/* モーダル全画面背景 */
-#eventDetailModal, .modal {
-    display: none;
-    position: fixed;
-    z-index: 10000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(5px);
-    overflow: auto;
-}
-
-/* モーダルウィンドウ */
-#eventDetailModal .modal-content, .modal-content {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    border-radius: 15px;
-    width: 90%;
-    max-width: 700px;
-    max-height: 85vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    margin: 0;
-    padding: 0;
-    z-index: 10001;
+/* モーダルアニメーション */
+@keyframes modalSlideUp {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -40%) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
 }
 
 /* モーダルヘッダー */
@@ -92,10 +73,12 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    line-height: 1;
 }
+
 .modal-close:hover {
     color: #333;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.1);
     transform: rotate(90deg);
 }
 
@@ -103,6 +86,79 @@
     padding: 0;
 }
 
+/* イベント詳細コンテンツ */
+.event-detail-content {
+    padding: 2rem;
+}
+
+.event-detail-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #eee;
+}
+
+.event-detail-title {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.event-detail-time {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.time-badge-large {
+    background: linear-gradient(45deg, #D96941, #B54B1E);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(217, 105, 65, 0.3);
+    font-size: 0.95rem;
+}
+
+.event-detail-location {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.event-detail-description {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid #D96941;
+    line-height: 1.8;
+    color: #333;
+    white-space: pre-wrap;
+    margin-bottom: 2rem;
+}
+
+/* QRコードセクション */
+.event-detail-qr {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #eee;
+}
+
+.qr-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* スケジュールセクション */
 .schedule-day {
     margin-bottom: 4rem;
 }
@@ -158,11 +214,16 @@
     opacity: 0;
     transform: translateX(-20px);
     transition: opacity 0.8s ease, transform 0.8s ease;
+    cursor: pointer;
 }
 
 .timeline-item.visible {
     opacity: 1;
     transform: translateX(0);
+}
+
+.timeline-item:hover {
+    transform: translateX(10px);
 }
 
 .timeline-time {
@@ -206,11 +267,28 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-left: 4px solid #D96941;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .event-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.event-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s;
+}
+
+.event-card:hover::before {
+    left: 100%;
 }
 
 .event-title {
@@ -236,6 +314,50 @@
 .event-description {
     color: #555;
     line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.event-qr-indicator {
+    margin-top: 1rem;
+}
+
+.qr-indicator {
+    display: inline-block;
+    background: linear-gradient(45deg, #4ade80, #22c55e);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.event-actions {
+    margin-top: 1rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover .event-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.event-detail-btn {
+    background: linear-gradient(45deg, #D96941, #B54B1E);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(217, 105, 65, 0.3);
+}
+
+.event-detail-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(217, 105, 65, 0.4);
 }
 
 .no-schedule {
@@ -289,107 +411,6 @@
     left: 0;
     font-weight: bold;
     font-size: 1.2rem;
-}
-
-/* CTA セクション */
-.cta-section {
-    background: linear-gradient(135deg, #D96941 0%, #B54B1E 100%);
-    color: white;
-    text-align: center;
-    padding: 4rem 0;
-}
-
-.cta-content {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.cta-title {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-.cta-description {
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
-}
-
-.cta-button {
-    display: inline-block;
-    background: white;
-    color: #D96941;
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    color: #D96941;
-}
-
-/* イベントカードの改善 */
-.timeline-item {
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.timeline-item:hover {
-    transform: translateX(10px);
-}
-
-.event-card {
-    position: relative;
-    overflow: hidden;
-}
-
-.event-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    transition: left 0.5s;
-}
-
-.event-card:hover::before {
-    left: 100%;
-}
-
-.event-actions {
-    margin-top: 1rem;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-}
-
-.timeline-item:hover .event-actions {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.event-detail-btn {
-    background: linear-gradient(45deg, #D96941, #B54B1E);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(217, 105, 65, 0.3);
-}
-
-.event-detail-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(217, 105, 65, 0.4);
 }
 
 /* 参加申込みセクション（QRコード付き） */
@@ -490,15 +511,6 @@
     color: white;
 }
 
-@keyframes qrPulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-}
-
 .qr-code-caption {
     color: #666;
     font-size: 0.9rem;
@@ -546,74 +558,118 @@
     margin: 0;
 }
 
-/* イベント詳細モーダル */
-.event-detail-modal {
-    max-width: 700px;
-    animation: modalSlideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-@keyframes modalSlideUp {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -40%) scale(0.9);
+/* レスポンシブデザイン */
+@media (max-width: 1024px) {
+    .participation-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
-    100% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+    
+    .participation-options {
+        grid-template-columns: 1fr;
     }
 }
 
-.event-detail-content {
-    padding: 2rem;
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95% !important;
+        max-height: 90vh !important;
+    }
+    
+    .modal-header {
+        padding: 1.5rem;
+    }
+    
+    .modal-title {
+        font-size: 1.3rem;
+    }
+    
+    .event-detail-content {
+        padding: 1.5rem;
+    }
+    
+    .event-detail-title {
+        font-size: 1.5rem;
+    }
+    
+    .event-detail-time {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .time-badge-large {
+        font-size: 0.85rem;
+        padding: 0.6rem 1rem;
+    }
+    
+    .timeline::before {
+        left: 80px;
+    }
+    
+    .timeline-time {
+        min-width: 70px;
+    }
+    
+    .start-time {
+        font-size: 1.1rem;
+    }
+    
+    .end-time {
+        font-size: 0.95rem;
+    }
+    
+    .date-title {
+        font-size: 1.6rem;
+    }
+    
+    .day-of-week {
+        font-size: 1rem;
+        display: block;
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+    
+    .timeline-item {
+        gap: 1rem;
+    }
+    
+    .event-card {
+        padding: 1rem;
+    }
+    
+    .event-title {
+        font-size: 1.2rem;
+    }
+    
+    .participation-options {
+        grid-template-columns: 1fr;
+    }
 }
 
-.event-detail-header {
-    text-align: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid #eee;
-}
-
-.event-detail-title {
-    font-size: 1.8rem;
-    color: #333;
-    margin-bottom: 0.5rem;
-}
-
-.event-detail-time {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-}
-
-.time-badge-large {
-    background: linear-gradient(45deg, #D96941, #B54B1E);
-    color: white;
-    padding: 0.8rem 1.5rem;
-    border-radius: 25px;
-    font-weight: 500;
-    box-shadow: 0 4px 15px rgba(217, 105, 65, 0.3);
-}
-
-.event-detail-location {
-    text-align: center;
-    font-size: 1.1rem;
-    color: #666;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.event-detail-description {
-    background: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 10px;
-    border-left: 4px solid #D96941;
-    line-height: 1.8;
-    color: #333;
-    white-space: pre-wrap;
+@media (max-width: 480px) {
+    .modal-header {
+        padding: 1rem;
+    }
+    
+    .modal-title {
+        font-size: 1.1rem;
+    }
+    
+    .modal-close {
+        width: 35px;
+        height: 35px;
+        font-size: 1.5rem;
+    }
+    
+    .event-detail-content {
+        padding: 1rem;
+    }
+    
+    .event-detail-title {
+        font-size: 1.3rem;
+    }
+    
+    .date-title {
+        font-size: 1.4rem;
+    }
 }
