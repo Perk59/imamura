@@ -29,48 +29,78 @@
     padding: 0 !important;
 }
 
-#eventDetailModal {
-    position: sticky !important;
-    top: 0 !important;
-    background: white !important;
-    z-index: 10 !important;
-    border-radius: 15px 15px 0 0 !important;
+/* モーダル全画面背景 */
+#eventDetailModal, .modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(5px);
+    overflow: auto;
 }
 
+/* モーダルウィンドウ */
+#eventDetailModal .modal-content, .modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    margin: 0;
+    padding: 0;
+    z-index: 10001;
+}
+
+/* モーダルヘッダー */
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 2rem;
+    padding: 2rem;
     border-bottom: 1px solid #eee;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px 15px 0 0;
 }
 
 .modal-title {
     font-size: 1.5rem;
     color: #333;
+    font-weight: 600;
     margin: 0;
 }
 
 .modal-close {
     background: none;
     border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    font-size: 24px;
-    line-height: 1;
-    color: #666;
+    font-size: 2rem;
     cursor: pointer;
+    color: #666;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
 }
-
 .modal-close:hover {
-    background: #f3f4f6;
     color: #333;
+    background: rgba(0,0,0,0.1);
     transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 0;
 }
 
 .schedule-day {
