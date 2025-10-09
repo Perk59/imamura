@@ -13,6 +13,11 @@ foreach ($schedules as $schedule) {
     $date = date('Y-m-d', strtotime($schedule['start_time']));
     $grouped_schedules[$date][] = $schedule;
 }
+
+// QR設定を取得（参加申込み用）
+$qr_settings = [
+    'form_url' => 'https://forms.gle/example' // 実際のフォームURLに変更
+];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -47,8 +52,21 @@ foreach ($schedules as $schedule) {
                 
                 <div class="timeline">
                     <?php foreach ($day_schedules as $index => $schedule): ?>
+                    <?php
+                        // JavaScriptに渡すデータをエスケープ
+                        $event_data = [
+                            'id' => $schedule['id'],
+                            'title' => $schedule['title'],
+                            'description' => $schedule['description'] ?? '',
+                            'location' => $schedule['location'] ?? '',
+                            'start_time' => $schedule['start_time'],
+                            'end_time' => $schedule['end_time'] ?? null,
+                            'qr_image' => $schedule['qr_image'] ?? null
+                        ];
+                        $event_json = htmlspecialchars(json_encode($event_data, JSON_HEX_APOS | JSON_HEX_QUOT), ENT_QUOTES, 'UTF-8');
+                    ?>
                     <div class="timeline-item" data-aos="fade-up" data-aos-delay="<?= $index * 100 ?>" 
-                         onclick="showEventDetail(<?= htmlspecialchars(json_encode($schedule), ENT_QUOTES, 'UTF-8') ?>)">
+                         onclick='showEventDetail(<?= $event_json ?>)'>
                         <div class="timeline-time">
                             <div class="start-time"><?= date('H:i', strtotime($schedule['start_time'])) ?></div>
                             <?php if ($schedule['end_time']): ?>
@@ -173,16 +191,16 @@ foreach ($schedules as $schedule) {
 
     <!-- イベント詳細モーダル -->
     <div id="eventDetailModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 class="modal-title">イベント詳細</h2>
-            <button class="modal-close" onclick="closeEventModal()">&times;</button>
-        </div>
-        <div class="modal-body" id="eventModalBody">
-            <!-- ここにJavaScriptで内容が設定されます -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">イベント詳細</h2>
+                <button class="modal-close" onclick="closeEventModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="eventModalBody">
+                <!-- ここにJavaScriptで内容が設定されます -->
+            </div>
         </div>
     </div>
-</div>
 
     <?php include 'includes/footer.php'; ?>
 
