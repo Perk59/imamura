@@ -18,7 +18,6 @@ function showEventDetail(event) {
     `;
     
     document.getElementById('eventModalBody').innerHTML = content;
-}
     
     const content = `
         <div class="event-detail-content">
